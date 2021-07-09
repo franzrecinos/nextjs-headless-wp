@@ -1,0 +1,30 @@
+{
+  "name": "nextjs-headless-wp",
+  "version": "0.0.1",
+  "description": "A monorepo for web with Wordpress headless CMS setup and Next.js",
+  "main": "index.ts",
+  "repository": "git@github.com:franzrecinos/nextjs-headless-wp.git",
+  "author": "Franz Recinos <franz.recinos@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/cms/*",
+      "packages/api/*",
+      "packages/web/*"
+    ]
+  },
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  },
+  "scripts": {
+    "build": "run-p clean run-s build:cms",
+    "build:cms": "tsc -b ./packages/tsconfig.cns-base.json",
+    "bootstrap": "lerna bootstrap",
+    "clean": "lerna run --parallel clean",
+    "release": "lerna publish"
+  },
+  "dependencies": {
+    "rimraf": "^3.0.1"
+  }
+}

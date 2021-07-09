@@ -1,0 +1,56 @@
+version: '3.3'
+
+services:
+  composer:
+  container_name: 'composer'
+    image: composer:2.0.6
+    command: update
+    volumes:
+      - ./wordpress:/app
+
+  mysql:
+    container_name: 'mysql'
+    image: mysql:8.0
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    volumes:
+      -  ./mysql:/var/lib/mysql
+
+  phpmyadmin:
+    container_name: 'php-my-admin'
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8183:80
+
+  wordpress:
+    container_name: 'wordpress'
+    depends_on:
+      - mysql
+      - composer
+    image: wordpress:latest
+    ports:
+      - "8020:80"
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: mysql:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - ./wordpress:/var/www/html
+
+volumes:
+  mysql_data: {}

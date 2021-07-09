@@ -1,0 +1,9 @@
+{
+  "name": "headless-wordpress",
+  "version": "0.0.1",
+  "description": "Dockerized headless wordpress",
+  "main": "index.js",
+  "author": "Franz Recinos <franz.recinos@gmail.com>",
+  "license": "MIT",
+  "private": true
+}
